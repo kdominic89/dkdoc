@@ -7,7 +7,7 @@ DKDoc is a custom dark theme for JSDoc 3 and uses [CodeMirror](https://codemirro
 
 ### Installation
 ```
-npm install codemirror
+npm i @kdominic/dkdoc
 ```
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@kdominic/dkdoc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "DKDoc is a custom dark theme for JSDoc 3.",
   "main": "publish.js",
   "scripts": {
