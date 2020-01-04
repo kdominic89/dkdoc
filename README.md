@@ -23,7 +23,7 @@ Navigation:
 ### Template
 ```
 "opts": {
-    "template": "node_modules/dkdoc"
+    "template": "node_modules/@kdominic/dkdoc"
 }
 ```
 
