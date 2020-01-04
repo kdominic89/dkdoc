@@ -1,12 +1,12 @@
-const doop = require('jsdoc/util/doop');
-const env = require('jsdoc/env');
-const fs = require('jsdoc/fs');
-const helper = require('jsdoc/util/templateHelper');
-const logger = require('jsdoc/util/logger');
-const path = require('jsdoc/path');
-const taffy = require('taffydb').taffy;
+const doop     = require('jsdoc/util/doop');
+const env      = require('jsdoc/env');
+const fs       = require('jsdoc/fs');
+const helper   = require('jsdoc/util/templateHelper');
+const logger   = require('jsdoc/util/logger');
+const path     = require('jsdoc/path');
+const taffy    = require('taffydb').taffy;
 const template = require('jsdoc/template');
-const util = require('util');
+const util     = require('util');
 
 const nodeMinify = require('node-minify');
 
@@ -235,14 +235,14 @@ function createHeader() {
 }
 
 function copyCodemirror(outdir) {
-    let   codemirrorPath = path.join(__dirname, '..'); // , 'node_modules', 'codemirror'
+    let   codemirrorPath = path.join(__dirname, '..', '..');
     const cb = (err, min) => {
         if (err) {
             console.error(err);
         }
     };
 
-    if (path.basename(__dirname) !== 'node_modules') {
+    if (path.basename(codemirrorPath) !== 'node_modules') {
         codemirrorPath = path.join(codemirrorPath, 'node_modules');
     }
     codemirrorPath = path.join(codemirrorPath, 'codemirror');
