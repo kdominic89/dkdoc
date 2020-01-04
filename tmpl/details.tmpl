@@ -1,0 +1,131 @@
+<?js 
+    const data = obj;
+
+    if (Array.isArray(data.properties) && !data.hideconstructor) {
+?>
+<h5 class="description-prop">Properties:</h5>
+<?js= this.partial('properties.tmpl', data) ?>
+<?js } ?>
+
+<dl class="details">
+    <?js if (data.version) {?>
+    <dt class="tag-version">Version</dt>
+    <dd class="tag-version"><?js= version ?></dd>
+    <?js } ?>
+
+    <?js if (data.since) {?>
+    <dt class="tag-since">Since</dt>
+    <dd class="tag-since"><?js= since ?></dd>
+    <?js } ?>
+
+    <?js if (data.inherited && data.inherits && !data.overrides) { ?>
+    <dt class="inherited-from">Inherited From</dt>
+    <dd class="inherited-from">
+        <?js= this.linkto(data.inherits, this.htmlsafe(data.inherits)) ?>
+    </dd>
+    <?js } ?>
+
+    <?js if (data.overrides) { ?>
+    <dt class="tag-overrides">Overrides</dt>
+    <dd class="tag-overrides">
+        <?js= this.linkto(data.overrides, this.htmlsafe(data.overrides)) ?>
+    </dd>
+    <?js } ?>
+
+    <?js if (Array.isArray(data.implementations) && data.implementations.length > 0) { ?>
+    <dt class="implementations">Implementations</dt>
+    <dd class="implementations">
+        <ul>
+            <?js data.implementations.forEach(impl => { ?>
+            <li><?js= this.linkto(impl, this.htmlsafe(impl)) ?></li>
+            <?js }); ?>
+        </ul>
+    </dd>
+    <?js } ?>
+
+    <?js if (Array.isArray(data.implements) && data.implements.length > 0) { ?>
+    <dt class="implements">Implements</dt>
+    <dd class="implements">
+        <ul>
+            <?js data.implements.forEach(impl => { ?>
+            <li><?js= this.linkto(impl, this.htmlsafe(impl)) ?></li>
+            <?js }); ?>
+        </ul>
+    </dd>
+    <?js } ?>
+
+    <?js if (Array.isArray(data.mixes) && data.mixes.length > 0) { ?>
+    <dt class="mixes">Mixes In</dt>
+    <dd class="mixes">
+        <ul>
+            <?js data.mixes.forEach(a => { ?>
+            <li><?js= this.linkto(a, a) ?></li>
+            <?js }); ?>
+        </ul>
+    </dd>
+    <?js } ?>
+
+    <?js if (Array.isArray(data.author) && author.length > 0) {?>
+    <dt class="tag-author">Author</dt>
+    <dd class="tag-author">
+        <ul>
+            <?js author.forEach(a => { ?>
+            <li><?js= this.resolveCustomAuthorLinks(a) ?></li>
+            <?js }); ?>
+        </ul>
+    </dd>
+    <?js } ?>
+
+    <?js if (data.copyright) {?>
+    <dt class="tag-copyright">Copyright</dt>
+    <dd class="tag-copyright"><?js= copyright ?></dd>
+    <?js } ?>
+
+    <?js if (data.license) {?>
+    <dt class="tag-license">License</dt>
+    <dd class="tag-license"><?js= license ?></dd>
+    <?js } ?>
+
+    <?js if (data.defaultvalue) {?>
+    <dt class="tag-default">Default Value</dt>
+    <dd class="tag-default"><?js= data.defaultvalue ?></dd>
+    <?js } ?>
+
+    <?js if (data.meta && this.outputSourceFiles) {?>
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><?js= this.linkto(meta.shortpath) ?>, <?js= this.linkto(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?></dd>
+    <?js } ?>
+
+    <?js if (Array.isArray(data.tutorials) && tutorials.length > 0) {?>
+    <dt class="tag-tutorial">Tutorials</dt>
+    <dd class="tag-tutorial">
+        <ul>
+            <?js tutorials.forEach(t => { ?>
+            <li><?js= this.tutoriallink(t) ?></li>
+            <?js }); ?>
+        </ul>
+    </dd>
+    <?js } ?>
+
+    <?js if (Array.isArray(data.see) && see.length > 0) {?>
+    <dt class="tag-see">See</dt>
+    <dd class="tag-see">
+        <ul>
+            <?js see.forEach(s => { ?>
+            <li><?js= this.linkto(s) ?></li>
+            <?js }); ?>
+        </ul>
+    </dd>
+    <?js } ?>
+
+    <?js if (Array.isArray(data.todo) && todo.length > 0) {?>
+    <dt class="tag-todo">To Do</dt>
+    <dd class="tag-todo">
+        <ul>
+            <?js todo.forEach(t => { ?>
+            <li><?js= t ?></li>
+            <?js }); ?>
+        </ul>
+    </dd>
+    <?js } ?>
+</dl>

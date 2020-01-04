@@ -1,0 +1,25 @@
+<?js const data = obj; ?>
+<?js if (Array.isArray(data.option) && data.option.length > 0) { ?>
+<div class="info-<?js= data.name ?>">
+    <table class="info-table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?js data.option.forEach(option => { ?>
+                <tr>
+                    <td class="type">
+                        <?js if (option.type && option.type.names) { ?><?js= this.partial('type.tmpl', option.type.names) ?><?js } ?>
+                    </td>
+                    <td class="description">
+                        <?js if (option.description) { ?><?js= option.description ?><?js } ?>
+                    </td>
+                </tr>
+                <?js }); ?>
+        </tbody>
+    </table>
+</div>
+<?js } ?>

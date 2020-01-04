@@ -1,0 +1,4 @@
+<?js const  data = obj; ?>
+<?js data.forEach((name, i) => { ?>
+<span class="param-type"><?js= this.linkto(name, this.htmlsafe(name)) ?></span><?js if (i < data.length-1) { ?> |<?js } ?>
+<?js }); ?>

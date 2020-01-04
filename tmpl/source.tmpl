@@ -1,0 +1,21 @@
+<?js const data = obj; ?>
+<div class="source-container">
+    <textarea id="code"><?js= data.code ?></textarea>
+    <script>
+        const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            mode:           "javascript",
+            theme:          "dk_dark",
+            lineNumbers:    true,
+            lineWrapping:   true,
+            scrollbarStyle: 'overlay',
+            gutters:        ["CodeMirror-linenumbers"],
+            readOnly:       true
+        });
+        let line = Number(location.hash.replace('#line', ''));
+    
+        if (line === null || isNaN(line) || !isFinite(line) || line < 0) {
+            line = 1;
+        }
+        editor.scrollTo(null, editor.heightAtLine(line - 1, "local"));
+    </script>
+</div>

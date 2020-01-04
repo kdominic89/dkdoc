@@ -1,0 +1,25 @@
+<?js const data = obj; ?>
+<?js if (Array.isArray(data) && data.length > 0) { ?>
+<div class="info-throw">
+    <table class="info-table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?js data.forEach(exception => { ?>
+                <tr>
+                    <td class="type">
+                        <?js if (exception.type && exception.type.names) { ?><?js= this.partial('type.tmpl', exception.type.names) ?><?js } ?>
+                    </td>
+                    <td class="description">
+                        <?js if (exception.description) { ?><?js= exception.description ?><?js } ?>
+                    </td>
+                </tr>
+                <?js }); ?>
+        </tbody>
+    </table>
+</div>
+<?js } ?>

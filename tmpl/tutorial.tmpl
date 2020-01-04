@@ -1,0 +1,12 @@
+<header class="tutorial-header">
+    <?js if (Array.isArray(children) && children.length > 0) { ?>
+    <ul>
+        <?js children.forEach(t => { ?><li><?js= this.tutoriallink(t.name) ?></li><?js }); ?>
+    </ul>
+    <?js } ?>
+
+    <h3><?js= header ?></h3>
+</header>
+<article class="tutorial-article">
+    <?js= content ?>
+</article>

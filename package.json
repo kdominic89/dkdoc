@@ -1,0 +1,23 @@
+{
+  "name": "@kdominic/dkdoc",
+  "version": "1.0.0",
+  "description": "DKDoc is a custom dark theme for JSDoc 3.",
+  "main": "publish.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dkdoc",
+    "jsdoc",
+    "jsdoc3",
+    "jsdoc-template",
+    "template"
+  ],
+  "author": "KDominic",
+  "license": "ISC",
+  "dependencies": {
+    "codemirror": "^5.50.2",
+    "jsdoc": "^3.6.3",
+    "node-minify": "^3.6.0"
+  }
+}

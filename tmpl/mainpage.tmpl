@@ -1,0 +1,31 @@
+<?js const data = obj; ?>
+<?js if (data.kind === 'package') { ?>
+<div class="container nopad">
+    <header><h4>package.json</h4></header>
+    <article>
+        <dl class="container-dl">
+            <dt>Name</dt>
+            <dd><?js= data.name ?></dd>
+            <dt>Version</dt>
+            <dd><?js= data.version ?></dd>
+            <dt>Author</dt>
+            <dd><?js if (!!data.author) { ?><?js= data.author ?><?js } ?></dd>
+            <dt>Description</dt>
+            <dd><?js if (!!data.description) { ?><?js= data.description ?><?js } ?></dd>
+            <dt>Keywords</dt>
+            <dd><?js if (!!data.keywords) { ?><?js= data.keywords.join(', ') ?><?js } ?></dd>
+            <dt>Licenses</dt>
+            <dd><?js if (!!data.licenses) { ?><?js= data.licenses[0].type ?><?js } ?></dd>
+        </dl>
+    </article>
+</div>
+<?js } ?>
+
+<?js if (data.readme) { ?>
+<div class="container">
+    <header><h4>README.md</h4></header>
+    <article>
+        <?js= data.readme ?>
+    </article>
+</div>
+<?js } ?>

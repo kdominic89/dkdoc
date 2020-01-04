@@ -1,0 +1,27 @@
+<?js const data = obj; ?>
+<?js if (Array.isArray(data.examples) && data.examples.length > 0) { ?>
+<div class="info-example">
+    <ol>
+        <?js data.examples.forEach((example, index) => { ?>
+        <li>
+            <div class="example-container">
+                <?js const name = `${data.name}_eg${index}` ?>
+                <textarea id="<?js= name ?>"><?js= example.code ?></textarea>
+                <script>
+                    CodeMirror.fromTextArea(document.getElementById("<?js= name ?>"), {
+                        mode:         "javascript",
+                        theme:        "dk_dark",
+                        lineNumbers:  true,
+                        lineWrapping: true,
+                        scrollbarStyle: null,
+                        gutters:      ["CodeMirror-linenumbers"],
+                        readOnly:     true
+                    });
+                </script>
+            </div>
+            <?js if (example.caption) { ?><div class="example-caption">Exsample <?js= (index + 1) ?>: <?js= example.caption ?></div><?js } ?>
+        </li>
+        <?js }); ?>
+    </ol>
+</div>
+<?js } ?>

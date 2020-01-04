@@ -1,0 +1,95 @@
+<?js
+    const data     = obj;
+    const classStr = (!!data.deprecated || !!data.summary) ? `${!!data.summary ? 'summary ' : ''}${!!data.deprecated ? 'deprecated' : ''}`.trim() : null;
+?>
+<div class="info-container">
+    <input id="f_<?js= id ?>-trigger" type="checkbox" class="toggler" />
+    <label for="f_<?js= id ?>-trigger">
+        <?js if (data.kind !== 'namespace') { ?>
+        <h4 id="<?js= id ?>" <?js if (classStr !== null) { ?>class="<?js= classStr?>"<?js } ?>><?js= data.attribs + (kind === 'class' ? 'new ' : '') + name + (data.signature || '') ?></h4>
+        <?js } ?>
+        <div class="arrow-icon"><div></div></div>
+    </label>
+
+    <?js if (data.summary) { ?>
+    <div class="info-summary"><?js= data.summary ?></div>
+    <?js } ?>
+    
+    <div class="info">
+        <?js if (data.kind !== 'module' && data.description) { ?>
+        <div class="info-description"><?js= data.description ?></div>
+        <?js } ?>
+        
+        <?js if (Array.isArray(data.params) && params.length > 0) { ?>
+        <?js= this.partial('params.tmpl', params) ?>
+        <?js } ?>
+        
+        <?js if (data['this']) { ?>
+        <div class="info-this"><?js= this.linkto(data['this'], data['this']) ?></div>
+        <?js } ?>
+        
+        <?js if (data.kind !== 'module' && Array.isArray(data.requires) && data.requires.length) { ?>
+        <div class="info-require">
+            <ul>
+                <?js data.requires.forEach(r => { ?>
+                <li><?js= this.linkto(r) ?></li>
+                <?js }); ?>
+            </ul>
+        </div>
+        <?js } ?>
+        
+        <?js if (data.augments && data.alias && data.alias.indexOf('module:') === 0) { ?>
+        <div class="info-augment"><?js= this.partial('augments.tmpl', data.augments) ?></div>
+        <?js } ?>
+
+        <?js if (kind === 'event' && data.type && data.type.names) { ?>
+        <div class="info-event"><?js= this.partial('type.tmpl', data.type.names) ?></div>
+        <?js } ?>
+
+        <?js if (data.fires && data.fires.length) {?>
+        <div class="info-fire">
+            <ul>
+                <?js data.fires.forEach(f => { ?>
+                <li><?js= this.linkto(f) ?></li>
+                <?js }); ?>
+            </ul>
+        </div>
+        <?js } ?>
+        
+        <?js if (Array.isArray(data.listens) && listens.length > 0) { ?>
+        <div class="info-listento">
+            <ul>
+                <?js listens.forEach(f => { ?>
+                <li><?js= this.linkto(f) ?></li>
+                <?js }); ?>
+            </ul>
+        </div>
+        <?js } ?>
+
+        <?js if (Array.isArray(data.listeners) && listeners.length) { ?>
+        <div class="info-listenof">
+            <ul>
+                <?js listeners.forEach(f => { ?>
+                <li><?js= this.linkto(f) ?></li>
+                <?js }); ?>
+            </ul>
+        </div>
+        <?js } ?>
+
+        <?js if (data.modifies && modifies.length) { ?>
+        <div class="info-modify">
+            <ul>
+                <?js modifies.forEach(m => { ?>
+                <li><?js= this.partial('modifies.tmpl', m) ?></li>
+                <?js }); ?>
+            </ul>
+        </div>
+        <?js } ?>
+
+        <?js= this.partial('exceptions.tmpl', data.exceptions) ?>
+        <?js= this.partial('returns.tmpl', { name: 'yield', option: data.yields }) ?>
+        <?js= this.partial('returns.tmpl', { name: 'return', option: data.returns }) ?>
+        <div class="info-detail"><?js= this.partial('details.tmpl', data) ?></div>
+        <?js= this.partial('examples.tmpl', { name: `f_${data.name}`, examples: data.examples }) ?>
+    </div>
+</div>

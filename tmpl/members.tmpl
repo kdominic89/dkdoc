@@ -1,0 +1,38 @@
+<?js
+    const data     = obj;
+    const classStr = (!!data.deprecated || !!data.summary) ? `${!!data.summary ? 'summary ' : ''}${!!data.deprecated ? 'deprecated' : ''}`.trim() : null;
+?>
+<div class="info-container">
+    <input id="m_<?js= id ?>-trigger" type="checkbox" class="toggler" />
+    <label for="m_<?js= id ?>-trigger">
+        <h4 id="<?js= id ?>" <?js if (classStr !== null) { ?>class="<?js= classStr?>"<?js } ?>><?js= data.attribs + name + (data.signature ? data.signature : '') ?></h4>
+        <div class="arrow-icon"><div></div></div>
+    </label>
+    
+    <?js if (data.summary) { ?>
+    <div class="info-summary"><?js= data.summary ?></div>
+    <?js } ?>
+
+    <div class="info">
+        <?js if (data.description) { ?>
+        <div class="info-description"><?js= data.description ?></div>
+        <?js } ?>
+
+        <?js if (data.type && data.type.names) {?>
+        <div class="info-type"><?js= this.partial('type.tmpl', data.type.names) ?></div>
+        <?js } ?>
+
+        <?js if (Array.isArray(data.fires) && data.fires.length > 0) { ?>
+        <div class="info-fire">
+            <ul>
+                <?js data.fires.forEach(f => { ?>
+                <li><?js= this.linkto(f) ?></li>
+                <?js }); ?>
+            </ul>
+        </div>
+        <?js } ?>
+
+        <div class="info-detail"><?js= this.partial('details.tmpl', data) ?></div>
+        <?js= this.partial('examples.tmpl', { name: `m_${data.name}`, examples: data.examples }) ?>
+    </div>
+</div>

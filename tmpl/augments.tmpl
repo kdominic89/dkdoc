@@ -1,0 +1,8 @@
+<?js const data = obj; ?>
+<?js if (Array.isArray(data) && data.length > 0) { ?>
+<ul>
+    <?js data.forEach(a => { ?>
+    <li><?js= this.linkto(a, a) ?></li>
+    <?js }) ?>
+</ul>
+<?js } ?>
