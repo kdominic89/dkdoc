@@ -361,7 +361,9 @@ function createNavListElement(content) {
 }
 
 function createNavSubelement(itemHeading, itemsNav) {
-    let collapsible = '';
+    let   collapsible = '';
+    const headId      = itemHeading.trim().replace(/<a href=".*">|<\/a>/g, '').replace(' ', '_');
+
     itemsNav = !!itemsNav && itemsNav !== '' ? `<ul>${itemsNav}</ul>` : '';
 
     if (env.conf.templates && env.conf.templates.collapsibleNav) {
@@ -369,8 +371,8 @@ function createNavSubelement(itemHeading, itemsNav) {
     }
     return (
         `<div class="subnav-container${collapsible}">
-            <input id="nh_${itemHeading}-trigger" type="checkbox" class="toggler" />
-            <label for="nh_${itemHeading}-trigger">
+            <input id="nh_${headId}-trigger" type="checkbox" class="toggler" />
+            <label for="nh_${headId}-trigger">
                 <h4>${itemHeading}</h4>
                 <div class="arrow-icon"><div></div></div>
             </label>
