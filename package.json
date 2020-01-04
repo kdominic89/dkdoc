@@ -15,6 +15,10 @@
   ],
   "author": "KDominic",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kdominic89/dkdoc"
+  },
   "dependencies": {
     "codemirror": "^5.50.2",
     "jsdoc": "^3.6.3",
