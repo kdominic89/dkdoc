@@ -23,7 +23,7 @@ Navigation:
 ### Template
 ```
 "opts": {
-    "template": "node_modules/tui-jsdoc-template"
+    "template": "node_modules/dkdoc"
 }
 ```
 
