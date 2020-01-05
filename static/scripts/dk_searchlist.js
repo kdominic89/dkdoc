@@ -36,9 +36,7 @@
 
             this.noResult.appendChild(document.createTextNode('no result'));
 
-            global.addEventListener('click', event => {
-                this.clear();
-            });
+            global.addEventListener('click', this.clear.bind(this));
             this.input.addEventListener('keydown',  this.search.bind(this));
             this.input.addEventListener('keypress', this.search.bind(this));
             this.input.addEventListener('keyup',    this.search.bind(this));
@@ -73,10 +71,8 @@
         }
 
         clear() {
-            this.index       = 0;
-            this.sublist     = [];
             this.input.value = '';
-            return this.reset();
+            return this.reset().clearSublist();
         }
 
         highlight(remove=false) {
@@ -95,8 +91,8 @@
         createListElement(item) {
             const listElement   = document.createElement('li');
             const highlightName = `${item.name.substring(0, item.start)}<strong>${item.name.substring(item.start, item.end)}</strong>${item.name.substring(item.end)}`;
-
-            listElement.innerHTML = `<span class="search-name">${highlightName}</span><span class="search-group">${item.group}</span>`;
+            
+            listElement.innerHTML = `<span class="search-name"><a href="${item.href}">${highlightName}</a></span><span class="search-group ${item.type}">${item.group}</span>`;
             listElement.onclick   = event => {
                 window.location = item.href;
             };
@@ -114,6 +110,10 @@
                 this.input.focus();
             };
 
+            result.onmouseleave = event => {
+                this.highlight();
+            };
+
             if (list.length > 0) {
                 list.forEach((item, index) => {
                     this.sublist.push(this.createListElement(item, index));
@@ -123,54 +123,56 @@
             else {
                 result.appendChild(this.noResult);
             }
+            this.highlight();
+
             return result;
         }
 
         search(event) {
             if (event.keyCode === 38 || event.which === 38 || event.code === 'ArrowUp' || event.key === 'ArrowUp') {
-                if (event.type === 'keydown') {
-                    this.highlight();
+                if (event.type === 'keydown' && this.sublist.length > 0) {
                     this.index -= 1;
-                    this.index = this.index < 0 ? (this.sublist.length-1) : this.index % this.sublist.length;
+                    this.index = this.index < 0 ? (this.sublist.length - 1) : this.index % this.sublist.length;
+                    this.highlight();
                 }
                 return this;
             }
 
             if (event.keyCode === 40 || event.which === 40 || event.code === 'ArrowDown' || event.key === 'ArrowDown') {
-                if (event.type === 'keydown') {
-                    this.highlight();
+                if (event.type === 'keydown' && this.sublist.length > 0) {
                     this.index = (this.index + 1) % this.sublist.length;
+                    this.highlight();
                 }
                 return this;
             }
 
-            if (event.type === 'keyup' && (event.charCode === 13 || event.keyCode === 13 || event.which === 13 || event.code === 'Enter' || event.key === 'Enter')) {
-                if (this.sublist.length > 0) {
+            if (event.charCode === 13 || event.keyCode === 13 || event.which === 13 || event.code === 'Enter' || event.key === 'Enter') {
+                if (event.type === 'keydown' && this.sublist.length > 0) {
                     this.sublist[this.index].click();
-                    return this;
                 }
+                return this;
             }
-            else {
-                const input = this.input.value.trim().toLowerCase();
 
-                if (input === '') {
-                    return this.clear();
+            const input = this.input.value.trim().toLowerCase();
+
+            if (input === '') {
+                return this.clear();
+            }
+            const list = [];
+
+            this.list.forEach(item => {
+                const testName = item.name.toLowerCase();
+
+                if (testName.includes(input)) {
+                    const start = testName.indexOf(input);
+                    item.start  = start;
+                    item.end    = start + input.length;
+                    list.push(item);
                 }
-                const list = [];
+            });
+            this.parent.appendChild(this.createList(list));
+            this.onSearch(list);
 
-                this.list.forEach(item => {
-                    const testName = item.name.toLowerCase();
-
-                    if (testName.includes(input)) {
-                        const start = testName.indexOf(input);
-                        item.start  = start;
-                        item.end    = start + input.length;
-                        list.push(item);
-                    }
-                });
-                this.parent.appendChild(this.createList(list));
-                this.onSearch(list);
-            }
             return this;
         }
     }

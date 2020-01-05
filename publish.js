@@ -438,7 +438,7 @@ function createNavIndexSublist(group, kind, memberof) {
     const subs = find({ kind, memberof });
 
     subs.forEach(sub => {
-        list.push({ name: sub.name, group, href: extractRawLink(sub.longname, sub.name) });
+        list.push({ name: sub.name, group, type: kind, href: extractRawLink(sub.longname, sub.name) });
     });
     return list;
 }
@@ -447,9 +447,17 @@ function createNavIndexList(groupList, groupName) {
     let list = [];
 
     groupList.forEach(obj => {
-        list.push({ name: obj.name, group: groupName, href: extractRawLink(obj.longname, obj.name) });
-        list = list.concat(createNavIndexSublist(obj.name, 'member', obj.longname));
-        list = list.concat(createNavIndexSublist(obj.name, 'function', obj.longname));
+        if (groupName === 'Global') {
+            list.push({ name: obj.name, group: groupName, type: obj.kind, href: extractRawLink(obj.longname, obj.name) });
+        }
+        else {
+            list.push({ name: obj.name, type: '', group: groupName, href: extractRawLink(obj.longname, obj.name) });
+
+            list = list.concat(createNavIndexSublist(obj.name, 'member',   obj.longname));
+            list = list.concat(createNavIndexSublist(obj.name, 'function', obj.longname));
+            list = list.concat(createNavIndexSublist(obj.name, 'event',    obj.longname));
+            list = list.concat(createNavIndexSublist(obj.name, 'typedef',  obj.longname));
+        }
     });
     return list;
 }
@@ -466,6 +474,14 @@ function createNavIndex(members) {
     return JSON.stringify(list);
 }
 
+function generateNavIndex(outdir, members) {
+    const navdir = path.join(outdir, 'nav');
+
+    if (!fs.existsSync(navdir)) {
+        fs.mkdirSync(navdir);
+    }
+    fs.writeFileSync(path.join(navdir, 'index.js'), `const navIndex=${createNavIndex(members)};`, 'utf8');
+}
 
 /**
  * Create the navigation sidebar.
@@ -513,9 +529,12 @@ function buildNav(members) {
         }
     }
     nav += '</section>';
-    nav += `<script>const navIndex = ${createNavIndex(members)};</script>`;
 
     return nav;
+}
+
+function modifyReadme(readme) {
+    return readme.replace(/ class="prettyprint source"/g, '');
 }
 
 /**
@@ -736,6 +755,7 @@ exports.publish = (taffyData, opts, tutorials) => {
 
     // once for all
     view.nav = buildNav(members);
+    generateNavIndex(outdir, members);
     attachModuleSymbols(find({ longname: { left: 'module:' } }), members.modules);
 
     // generate the pretty-printed source files first so other pages can link to them
@@ -746,14 +766,14 @@ exports.publish = (taffyData, opts, tutorials) => {
     if (members.globals.length) { generate('Global', [{ kind: 'globalobj' }], globalUrl); }
 
     // index page displays information from package.json and lists files
-    files    = find({kind: 'file'});
-    packages = find({kind: 'package'});
+    files    = find({ kind: 'file' });
+    packages = find({ kind: 'package' });
 
     generate(env.conf.templates.title || 'Home',
         packages.concat([
             {
                 kind:     'mainpage',
-                readme:   opts.readme,
+                readme:   modifyReadme(opts.readme),
                 longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'
             }
         ]).concat(files), indexUrl);

@@ -12,7 +12,7 @@ npm i @kdominic/dkdoc
 
 
 ## Feature
-Navigation:
+#### Navigation:
 * Simple Searchbox for Classes / Members / Methods
 * Collapsible
 
@@ -35,7 +35,7 @@ Navigation:
 ```
 
 ### Page Logo
-Text:
+#### Text:
 ```
 "templates": {
     "logo": "{string|null|Object} [logo=DKDoc]"
@@ -51,7 +51,7 @@ OR
 }
 ```
 
-Image:
+#### Image:
 
 ```
 "templates": {
@@ -62,7 +62,7 @@ Image:
 }
 ```
 
-Make logo to link:
+#### Make logo to link:
 ```
 "templates": {
     "logo": {
@@ -73,7 +73,7 @@ Make logo to link:
 }
 ```
 
-Disable logo:
+#### Disable logo:
 ```
 "templates": {
     "logo": null
@@ -82,7 +82,7 @@ Disable logo:
 **NOTE**: You can also set logo to "none" or logo.type to null or "none" to disable the logo.
 
 ### Collapsible Navigation
-Text:
+#### Text:
 ```
 "templates": {
     "collapsibleNav": {boolean} [collapsibleNav=false]
