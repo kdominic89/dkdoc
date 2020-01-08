@@ -680,7 +680,7 @@ main section.main-section {
 .readme-article pre {
     padding: 1rem 2rem;
     border: 1px solid var(--secondary-bg);
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: -2px -2px 5px 0px rgba(72, 72, 72, 0.25), 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
     font-size: 1.2rem;
 }
@@ -798,6 +798,11 @@ main section.main-section {
     margin-bottom: 1rem;
     color: var(--throw-color);
     content: '@Deprecated';
+}
+
+.info-container label h4.highlight {
+    border: 1px solid rgba(255, 215, 0, 1);
+    border-radius: 4px;
 }
 
 .info-container label h4.deprecated + .arrow-icon {

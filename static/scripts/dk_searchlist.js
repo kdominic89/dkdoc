@@ -22,7 +22,7 @@
                     writable: true
                 },
                 noResult: {
-                    value: document.createElement('li')
+                    value: global.document.createElement('li')
                 },
                 onSearch: {
                     get: () => _onSearch,
@@ -34,7 +34,7 @@
                 }
             });
 
-            this.noResult.appendChild(document.createTextNode('no result'));
+            this.noResult.appendChild(global.document.createTextNode('no result'));
 
             global.addEventListener('click', this.clear.bind(this));
             this.input.addEventListener('keydown',  this.search.bind(this));
@@ -75,7 +75,7 @@
             return this.reset().clearSublist();
         }
 
-        highlight(remove=false) {
+        highlightSearch(remove=false) {
             this.sublist.forEach((item, index) => {
                 if (index === this.index && !remove) {
                     item.classList.add('highlight');
@@ -88,13 +88,28 @@
             return this;
         }
 
+        highlighPage(type='add') {
+            const search_h = global.location.hash.replace('#', '');
+            const search_e = global.document.getElementById(search_h);
+
+            if (!!search_e) {
+                if (typeof search_e.classList[type] === 'function') {
+                    search_e.classList[type]('highlight');
+                }
+                search_e.scrollIntoView();
+            }
+            return this;
+        }
+
         createListElement(item) {
-            const listElement   = document.createElement('li');
+            const listElement   = global.document.createElement('li');
             const highlightName = `${item.name.substring(0, item.start)}<strong>${item.name.substring(item.start, item.end)}</strong>${item.name.substring(item.end)}`;
             
             listElement.innerHTML = `<span class="search-name"><a href="${item.href}">${highlightName}</a></span><span class="search-group ${item.type}">${item.group}</span>`;
             listElement.onclick   = event => {
-                window.location = item.href;
+                this.highlighPage('remove');
+                global.location.href = item.href;
+                this.highlighPage();
             };
             return listElement;
         }
@@ -102,16 +117,16 @@
         createList(list) {
             this.reset().clearSublist().show();
 
-            const result = document.createElement('ul');
+            const result = global.document.createElement('ul');
 
-            result.onmouseenter = event => {
-                this.highlight(true);
+            result.onmouseenter = () => {
+                this.highlightSearch(true);
                 this.input.blur();
                 this.input.focus();
             };
 
-            result.onmouseleave = event => {
-                this.highlight();
+            result.onmouseleave = () => {
+                this.highlightSearch();
             };
 
             if (list.length > 0) {
@@ -123,7 +138,7 @@
             else {
                 result.appendChild(this.noResult);
             }
-            this.highlight();
+            this.highlightSearch();
 
             return result;
         }
@@ -133,7 +148,7 @@
                 if (event.type === 'keydown' && this.sublist.length > 0) {
                     this.index -= 1;
                     this.index = this.index < 0 ? (this.sublist.length - 1) : this.index % this.sublist.length;
-                    this.highlight();
+                    this.highlightSearch();
                 }
                 return this;
             }
@@ -141,7 +156,7 @@
             if (event.keyCode === 40 || event.which === 40 || event.code === 'ArrowDown' || event.key === 'ArrowDown') {
                 if (event.type === 'keydown' && this.sublist.length > 0) {
                     this.index = (this.index + 1) % this.sublist.length;
-                    this.highlight();
+                    this.highlightSearch();
                 }
                 return this;
             }
