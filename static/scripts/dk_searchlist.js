@@ -42,6 +42,11 @@
             this.input.addEventListener('keyup',    this.search.bind(this));
             this.input.addEventListener('paste',    this.search.bind(this));
             this.input.addEventListener('change',   this.search.bind(this));
+
+            const links = document.getElementsByTagName('a');
+            for (let link of links) {
+                link.addEventListener('click', this._innerLink.bind(this));
+            }
         }
 
         show() {
@@ -88,17 +93,30 @@
             return this;
         }
 
-        highlighPage(type='add') {
-            const search_h = global.location.hash.replace('#', '');
-            const search_e = global.document.getElementById(search_h);
+        highlighElement(id, type='add') {
+            const element = global.document.getElementById(id);
 
-            if (!!search_e) {
-                if (typeof search_e.classList[type] === 'function') {
-                    search_e.classList[type]('highlight');
+            if (!!element) {
+                if (typeof element.classList[type] === 'function') {
+                    element.classList[type]('highlight');
                 }
-                search_e.scrollIntoView();
+                element.scrollIntoView();
             }
             return this;
+        }
+
+        highlighPage(type='add') {
+            return this.highlighElement(global.location.hash.replace('#', ''), type);
+        }
+
+        _innerLink(event) {
+            const oldLocation = global.location.href.replace(global.location.hash, '');
+            const newLocation = event.target.href.replace(event.target.hash, '');
+
+            if (oldLocation === newLocation) {
+                this.highlighPage(true);
+                this.highlighElement(event.target.hash.replace('#', ''), 'add');
+            }
         }
 
         createListElement(item) {

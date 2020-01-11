@@ -84,7 +84,6 @@ OR
 **NOTE**: You can also set logo to "none" or logo.type to null or "none" to disable the logo.
 
 ### Collapsible Navigation
-#### Text:
 ```
 "templates": {
     "collapsibleNav": {boolean} [collapsibleNav=false]
