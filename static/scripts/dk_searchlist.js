@@ -114,7 +114,7 @@
             const newLocation = event.target.href.replace(event.target.hash, '');
 
             if (oldLocation === newLocation) {
-                this.highlighPage(true);
+                this.highlighPage('remove');
                 this.highlighElement(event.target.hash.replace('#', ''), 'add');
             }
         }
