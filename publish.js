@@ -8,8 +8,9 @@ const taffy    = require('taffydb').taffy;
 const template = require('jsdoc/template');
 const util     = require('util');
 
-const nodeMinify = require('node-minify');
-
+const minify = require('@node-minify/core');
+const uglifyES = require('@node-minify/uglify-es');
+const cleanCSS = require('@node-minify/clean-css');
 
 const htmlsafe = helper.htmlsafe;
 const linkto = helper.linkto;
@@ -274,8 +275,8 @@ function copyCodemirror(outdir) {
         }
         catch (er) {}
         
-        nodeMinify.minify({
-            compressor: 'uglify-es',
+        minify({
+            compressor: uglifyES,
             input: [
                 path.join(codemirrorPath, 'lib', 'codemirror.js'),
                 path.join(codemirrorPath, 'mode', 'javascript', 'javascript.js'),
@@ -285,8 +286,8 @@ function copyCodemirror(outdir) {
             callback: cb
         });
     
-        nodeMinify.minify({
-            compressor: 'crass',
+        minify({
+            compressor: cleanCSS,
             input: [
                 path.join(codemirrorPath, 'lib', 'codemirror.css'),
                 path.join(codemirrorPath, 'addon', 'scroll', 'simplescrollbars.css'),

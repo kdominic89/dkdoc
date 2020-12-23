@@ -1,6 +1,6 @@
 {
   "name": "@kdominic/dkdoc",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "DKDoc is a custom dark theme for JSDoc 3.",
   "main": "publish.js",
   "scripts": {
@@ -23,8 +23,10 @@
     "url": "https://github.com/kdominic89/dkdoc/issues"
   },
   "dependencies": {
-    "codemirror": "^5.50.2",
-    "jsdoc": "^3.6.3",
-    "node-minify": "^3.6.0"
+    "@node-minify/clean-css": "^6.1.0",
+    "@node-minify/core": "^6.1.0",
+    "@node-minify/uglify-es": "^6.1.0",
+    "codemirror": "^5.59.0",
+    "jsdoc": "^3.6.6"
   }
 }
