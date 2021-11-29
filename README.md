@@ -1,6 +1,6 @@
 # DKDoc
 
-DKDoc is a custom dark theme for JSDoc 3 and uses [CodeMirror 5.59.0](https://codemirror.net/doc/manual.html) to display the source code.
+DKDoc is a custom dark theme for JSDoc 3 and uses [CodeMirror 5.64.0](https://codemirror.net/doc/manual.html) to display the source code.
 
 **NOTE**:  
 CodeMirror is includes as npm dependency and the files used are minimized and integrated in the documentation.  
