@@ -97,7 +97,7 @@ OR
 
 ```json
 "templates": {
-    "collapsibleNav": {boolean} [collapsibleNav=false]
+    "collapsibleNav": "{boolean} [collapsibleNav=false]"
 }
 ```
 
